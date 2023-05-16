@@ -1,0 +1,49 @@
+/**
+ * @param {number[]} nums
+ * @return {number[]}
+ */
+var findErrorNums = function (nums) {
+  let duplicateNum;
+  let missingNum;
+  
+  // Find the duplicate number
+  for (let i = 0; i < nums.length; i++) {
+    const absValue = Math.abs(nums[i]);
+    if (nums[absValue - 1] < 0) {
+      duplicateNum = absValue;
+    } else {
+      nums[absValue - 1] *= -1;
+    }
+  }
+  
+  // Find the missing number
+  for (let i = 0; i < nums.length; i++) {
+    if (nums[i] > 0) {
+      missingNum = i + 1;
+      break;
+    }
+  }
+
+  // Fix missingNum if it is undefined
+  if (missingNum === undefined) {
+    missingNum = nums.length + 1;
+  }
+
+  return [duplicateNum, missingNum];
+};
+
+function printArray(arr) {
+  console.log(JSON.stringify(arr).replace(/\"/g,'').replace(/,\s*/g, ', '));
+}
+
+let components = readline().split(" ");
+var nums = [];
+for (let i = 0; i < components.length; i++) {
+  nums.push(parseInt(components[i]));
+}
+
+// Solution
+let output = findErrorNums(nums);
+
+// print the output
+printArray(output);
